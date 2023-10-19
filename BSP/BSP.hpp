@@ -1,4 +1,4 @@
-﻿#include "CommonInclude.h"
+﻿#include "..\\C++\CommonInclude.h"
 
 // 보완할점
 // 1. 가로,세로 크기 최소크기 지정해서 막대기같이 생긴방 안나오게 변경
