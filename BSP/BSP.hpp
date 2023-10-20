@@ -115,9 +115,9 @@ namespace sy
 	Rect BSP_CreateRoom(Rect rect)
 	{
 		// 가로 세로 2칸씩 뺀 크기의 방을 만든다.
-		for (size_t y = 2; y < rect.height - 2; y++)
+		for (int y = 2; y < rect.height - 2; y++)
 		{
-			for (size_t x = 2; x < rect.width - 2; x++)
+			for (int x = 2; x < rect.width - 2; x++)
 			{
 				Map[rect.y + y][rect.x + x] = 1;
 			}
@@ -138,13 +138,13 @@ namespace sy
 			int minX = std::min(x1, x2);
 			int maxX = std::max(x1, x2);
 
-			for (size_t i = 0; minX + i <= maxX; i++)
+			for (int i = 0; minX + i <= maxX; i++)
 				Map[divideLine][minX + i] = 3;
 
-			for (size_t i = 1; Map[divideLine - i][x1] == 0; i++)
+			for (int i = 1; Map[divideLine - i][x1] == 0; i++)
 				Map[divideLine - i][x1] = 4;
 
-			for (size_t i = 1; Map[divideLine + i][x2] == 0; i++)
+			for (int i = 1; Map[divideLine + i][x2] == 0; i++)
 				Map[divideLine + i][x2] = 4;
 		}
 		else
@@ -157,13 +157,13 @@ namespace sy
 			int minY = std::min(y1, y2);
 			int maxY = std::max(y1, y2);
 
-			for (size_t i = 0; minY + i <= maxY; i++)
+			for (int i = 0; minY + i <= maxY; i++)
 				Map[minY + i][divideLine] = 4;
 
-			for (size_t i = 1; Map[y1][divideLine - i] == 0; i++)
+			for (int i = 1; Map[y1][divideLine - i] == 0; i++)
 				Map[y1][divideLine - i] = 3;
 
-			for (size_t i = 1; Map[y2][divideLine + i] == 0; i++)
+			for (int i = 1; Map[y2][divideLine + i] == 0; i++)
 				Map[y2][divideLine + i] = 3;
 		}
 	}
