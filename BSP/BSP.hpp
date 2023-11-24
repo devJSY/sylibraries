@@ -48,7 +48,6 @@ namespace sy
 		return dist(eng);
 	}
 
-
 	void BSP_Init()
 	{
 		BSP_CreateMap();
