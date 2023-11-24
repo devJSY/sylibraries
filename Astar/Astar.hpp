@@ -8,10 +8,12 @@ namespace sy
 {
 	using namespace std;
 
+#define DirectionNum 4	// 4방향 or 8방향
+
 	int ROW = 0, COL = 0;
 	pair<int, int> start, goal;
 
-	typedef struct node 
+	typedef struct node
 	{
 		int x, y;	//좌표
 		int G, H;	//g(node), h(node)
@@ -20,7 +22,7 @@ namespace sy
 
 	struct cmp //우선순위 큐 비교 함수
 	{
-		bool operator()(const node u, const node v) 
+		bool operator()(const node u, const node v)
 		{
 			if (u.G + u.H > v.G + v.H) return true;//F는 작은게 위로 오게
 			else if (u.G + u.H == v.G + v.H) {//F가 같다면 G가 큰게 위로 오게
@@ -30,17 +32,17 @@ namespace sy
 			else return false;
 		}
 	};
-	
-	void Print_map(const vector<vector<char>>& map) 
-	{ 
+
+	void Print_map(const vector<vector<char>>& map)
+	{
 		for (int i = 0; i < map.size(); i++) {
-			for (int j = 0; j < map[i].size(); j++) 
-				cout << map[i][j] << " ";
-			cout << '\n';
+			for (int j = 0; j < map[i].size(); j++)
+				cout << map[i][j];
+			cout << endl;
 		}
 	}
 
-	int Astar(vector<vector<char>> map, pair<int, int> start, pair<int, int> goal)
+	int Astar(vector<vector<char>>& map, pair<int, int> start, pair<int, int> goal)
 	{
 		priority_queue<Node, vector<Node>, cmp> open;	// 우선순위 큐
 
@@ -60,8 +62,9 @@ namespace sy
 		open.push(s_node);
 		close[s_node.y][s_node.x] = true;				// 폐쇄 노드
 
-		vector<vector<char>> result = map;
-		while (open.size()) 
+		// 복사본으로 체크
+		vector<vector<char>> result = map;				
+		while (open.size())
 		{
 			int x = open.top().x;						// 우선순위 큐에서 top 정보 추출
 			int y = open.top().y;
@@ -72,7 +75,7 @@ namespace sy
 			if (x == goal.second && y == goal.first) break;	// 도착 지점이 나오면 끝
 
 			Node add;
-			for (int i = 0; i < 8; i++) {// top 노드에서 상하좌우 4방향으로 탐색(i<8이면 8방향)
+			for (int i = 0; i < DirectionNum; i++) {// top 노드에서 상하좌우 4방향으로 탐색(i<8이면 8방향)
 				int nextX = x + cx[i];
 				int nextY = y + cy[i];
 				if (nextX >= 0 && nextX < COL && nextY >= 0 && nextY < ROW) {
@@ -85,28 +88,27 @@ namespace sy
 						close[nextY][nextX] = true;
 						result[nextY][nextX] = '9';		// 우선순위 큐에 들어감
 						open.push(add);					// 우선순위 큐에 삽입	
-						system("cls");
-						Print_map(result);
+						//system("cls");
+						//Print_map(result);
 					}
 				}
 			}
 
 		}
 
-
+		// 원본 Map에 Astar 경로 체크
 		int px = close_list.back().x;
 		int py = close_list.back().y;
 		while (close_list.size()) {						// close_list를 역추적해 경로 탐색
 			if (px == close_list.back().x && py == close_list.back().y) {// 목표 노드부터 부모 노드를 탐색해 역추적
-				result[py][px] = '*';
+				map[py][px] = '*';
 				px = close_list.back().parent.second;
 				py = close_list.back().parent.first;
-				system("cls");
-				Print_map(result);
+				//system("cls");
+				//Print_map(result);
 			}
 			close_list.pop_back();
 		}
-
 
 		return 0;
 	}
@@ -151,10 +153,13 @@ namespace sy
 		std::vector<std::vector<char>> map = fileload("..\\Astar\\" + FileName);
 		if (map.empty()) return -1;
 
-		// 입력받은 맵 출력
-		Print_map(map);
+		//// 입력받은 맵 출력
+		//Print_map(map);
 
 		Astar(map, start, goal);
+
+		system("cls");
+		Print_map(map);
 
 		return 0;
 	}

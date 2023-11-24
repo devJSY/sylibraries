@@ -14,6 +14,14 @@
 
 namespace sy
 {
+#define RoomNum 0
+#define WallNum 1
+#define RowNum 4
+#define ColNum 5
+
+#define MaxWidth 128
+#define MaxHeight 128
+
 	struct Rect
 	{
 		Rect(int _x, int _y, int _w, int _h) : x(_x), y(_y), width(_w), height(_h) {}
@@ -24,9 +32,7 @@ namespace sy
 		int height;
 	};
 
-	const int MaxWidth = 128;
-	const int MaxHeight = 128;
-	std::vector<std::vector<int>> Map; // 0: 빈 공간 1 : 방, 3: 가로분할 길, 4: 세로분할 길
+	std::vector<std::vector<int>> Map; // 0: 방 1 : 벽, 3: 가로분할 길, 4: 세로분할 길
 
 	// 전방선언
 	void BSP_Init();
@@ -35,6 +41,7 @@ namespace sy
 	Rect BSP_CreateRoom(Rect rect);
 	void BSP_ConnectRoom(Rect parentRoom, Rect childRoom, int divideLine, bool LineDir);
 	void BSP_Print();
+	void BSP_Save();
 
 	int GetRandomInt(int min, int max)
 	{
@@ -52,16 +59,17 @@ namespace sy
 	{
 		BSP_CreateMap();
 		BSP_Print();
+		BSP_Save();
 	}
 
 	void BSP_CreateMap()
 	{
-		// 맵의 모든값을 0으로 초기화
+		// 맵의 모든값을 WallNum으로 초기화
 		Map.resize(MaxHeight);
 		for (size_t i = 0; i < MaxHeight; i++)
 		{
 			Map[i].resize(MaxWidth);
-			std::fill(Map[i].begin(), Map[i].end(), 0);
+			std::fill(Map[i].begin(), Map[i].end(), WallNum);
 		}
 
 		//Rect root = Rect(MaxWidth / 4, MaxHeight / 4, MaxWidth / 2, MaxHeight / 2);
@@ -118,7 +126,7 @@ namespace sy
 		{
 			for (int x = 2; x < rect.width - 2; x++)
 			{
-				Map[rect.y + y][rect.x + x] = 1;
+				Map[rect.y + y][rect.x + x] = RoomNum;
 			}
 		}
 
@@ -138,13 +146,13 @@ namespace sy
 			int maxX = std::max(x1, x2);
 
 			for (int i = 0; minX + i <= maxX; i++)
-				Map[divideLine][minX + i] = 3;
+				Map[divideLine][minX + i] = RowNum;
 
-			for (int i = 1; Map[divideLine - i][x1] == 0; i++)
-				Map[divideLine - i][x1] = 4;
+			for (int i = 1; Map[divideLine - i][x1] == WallNum; i++)
+				Map[divideLine - i][x1] = ColNum;
 
-			for (int i = 1; Map[divideLine + i][x2] == 0; i++)
-				Map[divideLine + i][x2] = 4;
+			for (int i = 1; Map[divideLine + i][x2] == WallNum; i++)
+				Map[divideLine + i][x2] = ColNum;
 		}
 		else
 		{
@@ -157,13 +165,13 @@ namespace sy
 			int maxY = std::max(y1, y2);
 
 			for (int i = 0; minY + i <= maxY; i++)
-				Map[minY + i][divideLine] = 4;
+				Map[minY + i][divideLine] = ColNum;
 
-			for (int i = 1; Map[y1][divideLine - i] == 0; i++)
-				Map[y1][divideLine - i] = 3;
+			for (int i = 1; Map[y1][divideLine - i] == WallNum; i++)
+				Map[y1][divideLine - i] = RowNum;
 
-			for (int i = 1; Map[y2][divideLine + i] == 0; i++)
-				Map[y2][divideLine + i] = 3;
+			for (int i = 1; Map[y2][divideLine + i] == WallNum; i++)
+				Map[y2][divideLine + i] = RowNum;
 		}
 	}
 
@@ -179,6 +187,32 @@ namespace sy
 			}
 
 			std::cout << std::endl;
+		}
+	}
+
+	void BSP_Save()
+	{
+		std::string line;
+		std::ofstream file("..\\BSP\\MAP.txt");
+
+		file << MaxHeight << " " << MaxWidth << std::endl;
+
+		if (file.is_open()) {
+			for (size_t y = 0; y < Map.size(); y++)
+			{
+				for (size_t x = 0; x < Map[y].size(); x++)
+				{
+					file << Map[y][x];
+				}
+
+				file << std::endl;
+			}
+
+			file.close();
+		}
+		else {
+			std::cout << "error" << std::endl;
+			return;
 		}
 	}
 }
