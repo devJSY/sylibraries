@@ -3,7 +3,7 @@
 
 namespace sy
 {
-BSP::BSP() : RoomNum(0), WallNum(1), BorderNum(4), RowNum(5), ColNum(6), MaxWidth(128), MaxHeight(128)
+BSP::BSP() : m_RoomNum(0), m_WallNum(1), m_BorderNum(4), m_RowNum(5), m_ColNum(6), m_MaxWidth(160), m_MaxHeight(90)
 {
 }
 
@@ -11,35 +11,41 @@ BSP::~BSP()
 {
 }
 
-void BSP::Init()
+int BSP::Init()
 {
     CreateMap();
     Print();
     Save();
+
+    return 0;
 }
 
-void BSP::Init(int width, int height)
+int BSP::Init(int width, int height)
 {
-    MaxWidth = width;
-    MaxHeight = height;
+    m_MaxWidth = width;
+    m_MaxHeight = height;
 
     Init();
+
+    return 0;
 }
 
-void BSP::CreateMap()
+int BSP::CreateMap()
 {
     // 맵의 모든값을 WallNum으로 초기화
-    Map.resize(MaxHeight);
-    for (size_t i = 0; i < MaxHeight; i++)
+    m_Map.resize(m_MaxHeight);
+    for (size_t i = 0; i < m_MaxHeight; i++)
     {
-        Map[i].resize(MaxWidth);
-        std::fill(Map[i].begin(), Map[i].end(), WallNum);
+        m_Map[i].resize(m_MaxWidth);
+        std::fill(m_Map[i].begin(), m_Map[i].end(), m_WallNum);
     }
 
-    // Rect root = Rect(MaxWidth / 4, MaxHeight / 4, MaxWidth / 2, MaxHeight / 2);
-    Rect root = Rect(0, 0, MaxWidth, MaxHeight);
+    // Rect root = Rect(m_MaxWidth / 4, m_MaxHeight / 4, m_MaxWidth / 2, m_MaxHeight / 2);
+    Rect root = Rect(0, 0, m_MaxWidth, m_MaxHeight);
 
     DevideRoom(root, GetRandomInt(0, 1));
+
+    return 0;
 }
 
 Rect BSP::DevideRoom(Rect rect, bool LineDir)
@@ -90,21 +96,21 @@ Rect BSP::CreateRoom(Rect rect)
     {
         for (int x = 2; x <= rect.width - 2; x++)
         {
-            Map[rect.y + y][rect.x + x] = RoomNum;
+            m_Map[rect.y + y][rect.x + x] = m_RoomNum;
         }
     }
 
     // 테두리 처리
     for (int x = 2; x <= rect.width - 2; x++)
     {
-        Map[rect.y + 2][rect.x + x] = BorderNum;               // 상단 가로
-        Map[rect.y + rect.height - 2][rect.x + x] = BorderNum; // 하단 가로
+        m_Map[rect.y + 2][rect.x + x] = m_BorderNum;               // 상단 가로
+        m_Map[rect.y + rect.height - 2][rect.x + x] = m_BorderNum; // 하단 가로
     }
 
     for (int y = 2; y <= rect.height - 2; y++)
     {
-        Map[rect.y + y][rect.x + 2] = BorderNum;              // 좌측 세로
-        Map[rect.y + y][rect.x + rect.width - 2] = BorderNum; // 우측 세로
+        m_Map[rect.y + y][rect.x + 2] = m_BorderNum;              // 좌측 세로
+        m_Map[rect.y + y][rect.x + rect.width - 2] = m_BorderNum; // 우측 세로
     }
 
     return Rect(rect.x + 2, rect.y + 2, rect.width - 2, rect.height - 2);
@@ -125,21 +131,21 @@ void BSP::ConnectRoom(Rect parentRoom, Rect childRoom, int divideLine, bool Line
         int i = 0;
 
         for (i = 0; minX + i <= maxX; i++)
-            Map[divideLine][minX + i] = RowNum;
+            m_Map[divideLine][minX + i] = m_RowNum;
 
-        for (i = 1; Map[divideLine - i][x1] == WallNum; i++)
-            Map[divideLine - i][x1] = ColNum;
-
-        // 통로 구멍 뚫기
-        if (Map[divideLine - i][x1] == BorderNum)
-            Map[divideLine - i][x1] = RoomNum;
-
-        for (i = 1; Map[divideLine + i][x2] == WallNum; i++)
-            Map[divideLine + i][x2] = ColNum;
+        for (i = 1; m_Map[divideLine - i][x1] == m_WallNum; i++)
+            m_Map[divideLine - i][x1] = m_ColNum;
 
         // 통로 구멍 뚫기
-        if (Map[divideLine + i][x2] == BorderNum)
-            Map[divideLine + i][x2] = RoomNum;
+        if (m_Map[divideLine - i][x1] == m_BorderNum)
+            m_Map[divideLine - i][x1] = m_RoomNum;
+
+        for (i = 1; m_Map[divideLine + i][x2] == m_WallNum; i++)
+            m_Map[divideLine + i][x2] = m_ColNum;
+
+        // 통로 구멍 뚫기
+        if (m_Map[divideLine + i][x2] == m_BorderNum)
+            m_Map[divideLine + i][x2] = m_RoomNum;
     }
     else
     {
@@ -153,21 +159,21 @@ void BSP::ConnectRoom(Rect parentRoom, Rect childRoom, int divideLine, bool Line
 
         int i = 0;
         for (i = 0; minY + i <= maxY; i++)
-            Map[minY + i][divideLine] = ColNum;
+            m_Map[minY + i][divideLine] = m_ColNum;
 
-        for (i = 1; Map[y1][divideLine - i] == WallNum; i++)
-            Map[y1][divideLine - i] = RowNum;
-
-        // 통로 구멍 뚫기
-        if (Map[y1][divideLine - i] == BorderNum)
-            Map[y1][divideLine - i] = RoomNum;
-
-        for (i = 1; Map[y2][divideLine + i] == WallNum; i++)
-            Map[y2][divideLine + i] = RowNum;
+        for (i = 1; m_Map[y1][divideLine - i] == m_WallNum; i++)
+            m_Map[y1][divideLine - i] = m_RowNum;
 
         // 통로 구멍 뚫기
-        if (Map[y2][divideLine + i] == BorderNum)
-            Map[y2][divideLine + i] = RoomNum;
+        if (m_Map[y1][divideLine - i] == m_BorderNum)
+            m_Map[y1][divideLine - i] = m_RoomNum;
+
+        for (i = 1; m_Map[y2][divideLine + i] == m_WallNum; i++)
+            m_Map[y2][divideLine + i] = m_RowNum;
+
+        // 통로 구멍 뚫기
+        if (m_Map[y2][divideLine + i] == m_BorderNum)
+            m_Map[y2][divideLine + i] = m_RoomNum;
     }
 }
 
@@ -175,31 +181,31 @@ void BSP::Print()
 {
     system("cls"); // 콘솔창 clear
 
-    for (size_t y = 0; y < Map.size(); y++)
+    for (size_t y = 0; y < m_Map.size(); y++)
     {
-        for (size_t x = 0; x < Map[y].size(); x++)
+        for (size_t x = 0; x < m_Map[y].size(); x++)
         {
-            std::cout << Map[y][x];
+            std::cout << m_Map[y][x];
         }
 
         std::cout << std::endl;
     }
 }
 
-void BSP::Save()
+int BSP::Save()
 {
     std::string line;
     std::ofstream file("..\\BSP\\MAP.txt");
 
-    file << MaxHeight << " " << MaxWidth << std::endl;
+    file << m_MaxHeight << " " << m_MaxWidth << std::endl;
 
     if (file.is_open())
     {
-        for (size_t y = 0; y < Map.size(); y++)
+        for (size_t y = 0; y < m_Map.size(); y++)
         {
-            for (size_t x = 0; x < Map[y].size(); x++)
+            for (size_t x = 0; x < m_Map[y].size(); x++)
             {
-                file << Map[y][x];
+                file << m_Map[y][x];
             }
 
             file << std::endl;
@@ -210,8 +216,10 @@ void BSP::Save()
     else
     {
         std::cout << "error" << std::endl;
-        return;
+        return -1;
     }
+
+    return 0;
 }
 
 } // namespace sy

@@ -21,26 +21,28 @@ class BSP
     SINGLETON(BSP)
 
   public:
-    void Init();
-    void Init(int width, int height);
+    int Init();
+    int Init(int width, int height);
+
+  public:
+    void Print();
+    int Save();
 
   private:
-    void CreateMap();
+    int CreateMap();
     Rect DevideRoom(Rect rect, bool LineDir);
     Rect CreateRoom(Rect rect);
     void ConnectRoom(Rect parentRoom, Rect childRoom, int divideLine, bool LineDir);
-    void Print();
-    void Save();
 
   private:
-    std::vector<std::vector<int>> Map;
+    std::vector<std::vector<int>> m_Map;
 
-    int RoomNum;
-    int WallNum;
-    int BorderNum;
-    int RowNum;
-    int ColNum;
-    int MaxWidth;
-    int MaxHeight;
+    int m_RoomNum;
+    int m_WallNum;
+    int m_BorderNum;
+    int m_RowNum;
+    int m_ColNum;
+    int m_MaxWidth;
+    int m_MaxHeight;
 };
 } // namespace sy

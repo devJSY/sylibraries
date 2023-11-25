@@ -1,6 +1,5 @@
-﻿#include "..\\BSP\\\BSP.hpp"
-#include "..\\Astar\Astar.hpp"
-#include "..\\BSP\\\BSP.h"
+﻿#include "..\\BSP\\\BSP.h"
+#include "..\\AStar\\\AStar.h"
 
 int main()
 {
@@ -9,6 +8,8 @@ int main()
 
     //sy::BSP::GetInst()->Init();
     //sy::BSP::GetInst()->Init(64, 64);
+
+    //sy::AStar::GetInst()->Init("MAP.txt");
 
     return 0;
 }
