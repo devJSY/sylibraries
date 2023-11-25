@@ -1,4 +1,4 @@
-﻿#include "..\\C++\CommonInclude.h"
+﻿#include "..\\C++\global.h"
 
 // 참고링크
 // https://blog.naver.com/PostView.naver?blogId=oyh951416&logNo=222045386773&parentCategoryNo=&categoryNo=8&viewDate=&isShowPopularPosts=false&from=search

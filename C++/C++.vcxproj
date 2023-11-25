@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="C++.cpp" />
+    <ClCompile Include="func.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Astar\Astar.vcxproj">
@@ -162,7 +163,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CommonInclude.h" />
+    <ClInclude Include="global.h" />
+    <ClInclude Include="define.h" />
+    <ClInclude Include="func.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
