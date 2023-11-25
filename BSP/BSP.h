@@ -42,7 +42,10 @@ class BSP
     int m_BorderNum;
     int m_RowNum;
     int m_ColNum;
+
     int m_MaxWidth;
     int m_MaxHeight;
+
+    int m_RoomSize;
 };
 } // namespace sy

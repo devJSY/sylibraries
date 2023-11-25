@@ -3,7 +3,9 @@
 
 namespace sy
 {
-BSP::BSP() : m_RoomNum(0), m_WallNum(1), m_BorderNum(4), m_RowNum(5), m_ColNum(6), m_MaxWidth(160), m_MaxHeight(90)
+BSP::BSP()
+    : m_RoomNum(0), m_WallNum(1), m_BorderNum(4), m_RowNum(5), m_ColNum(6), m_MaxWidth(160), m_MaxHeight(90),
+      m_RoomSize(20) // 방크기가 너무 작아져 버리면 ConnectRoom시 문제가 발생할 수 있음
 {
 }
 
@@ -50,7 +52,7 @@ int BSP::CreateMap()
 
 Rect BSP::DevideRoom(Rect rect, bool LineDir)
 {
-    if (rect.width < 20 || rect.height < 20)
+    if (rect.width < m_RoomSize || rect.height < m_RoomSize)
     {
         return CreateRoom(rect);
     }
@@ -121,9 +123,9 @@ void BSP::ConnectRoom(Rect parentRoom, Rect childRoom, int divideLine, bool Line
     if (LineDir)
     {
         // 가로 분할
-        // (시작위치 + 2) - (방생성 오프셋 4)
-        int x1 = (parentRoom.x + 2) + GetRandomInt(0, parentRoom.width - 6);
-        int x2 = (childRoom.x + 2) + GetRandomInt(0, childRoom.width - 6);
+        // (시작위치 + 2, 테두리 + 1) - (방생성 오프셋 4, 끝위치 + 2, 테두리 + 1)
+        int x1 = (parentRoom.x + 3) + GetRandomInt(0, parentRoom.width - 4 - 3);
+        int x2 = (childRoom.x + 3) + GetRandomInt(0, childRoom.width - 4 - 3);
 
         int minX = std::min(x1, x2);
         int maxX = std::max(x1, x2);
@@ -150,9 +152,9 @@ void BSP::ConnectRoom(Rect parentRoom, Rect childRoom, int divideLine, bool Line
     else
     {
         // 세로 분할
-        // (시작위치 + 2) - (방생성 오프셋 4)
-        int y1 = (parentRoom.y + 2) + GetRandomInt(0, parentRoom.height - 6);
-        int y2 = (childRoom.y + 2) + GetRandomInt(0, childRoom.height - 6);
+        // (시작위치 + 2, 테두리 + 1) - (방생성 오프셋 4, 끝위치 + 2, 테두리 + 1)
+        int y1 = (parentRoom.y + 3) + GetRandomInt(0, parentRoom.height - 4 - 3);
+        int y2 = (childRoom.y + 3) + GetRandomInt(0, childRoom.height - 4 - 3);
 
         int minY = std::min(y1, y2);
         int maxY = std::max(y1, y2);
