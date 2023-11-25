@@ -4,7 +4,7 @@
 int main()
 {
     //sy::BSP_Init();
-    sy::Astar_Init("MAP.txt");
+    //sy::Astar_Init("MAP.txt");
 
     return 0;
 }
