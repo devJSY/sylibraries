@@ -1,0 +1,1 @@
+xcopy /s /y  /exclude:exclude_list.txt ".\Project\BSP\*.h" ".\External\Include\BSP"

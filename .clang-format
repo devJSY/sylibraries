@@ -1,4 +1,13 @@
 ﻿---
 BasedOnStyle: Microsoft
+AlwaysBreakTemplateDeclarations: 'Yes'
+BreakConstructorInitializers: BeforeComma
+BreakInheritanceList: BeforeComma
+IndentCaseLabels: 'false'
+NamespaceIndentation: All
+PointerAlignment: Left
+SortIncludes: 'false'
+AllowShortFunctionsOnASingleLine: InlineOnly
+AccessModifierOffset : -4
 
 ...
