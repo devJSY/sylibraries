@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BSP", "Project\BSP\BSP.vcxp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Astar", "Project\Astar\Astar.vcxproj", "{F13A2E8B-ECAB-4CB8-A22C-8645EDA956D2}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultiThread", "Project\MultiThread\MultiThread.vcxproj", "{F1CAD451-C201-472D-B377-26A08285DAC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{F13A2E8B-ECAB-4CB8-A22C-8645EDA956D2}.Release|x64.Build.0 = Release|x64
 		{F13A2E8B-ECAB-4CB8-A22C-8645EDA956D2}.Release|x86.ActiveCfg = Release|Win32
 		{F13A2E8B-ECAB-4CB8-A22C-8645EDA956D2}.Release|x86.Build.0 = Release|Win32
+		{F1CAD451-C201-472D-B377-26A08285DAC7}.Debug|x64.ActiveCfg = Debug|x64
+		{F1CAD451-C201-472D-B377-26A08285DAC7}.Debug|x64.Build.0 = Debug|x64
+		{F1CAD451-C201-472D-B377-26A08285DAC7}.Debug|x86.ActiveCfg = Debug|Win32
+		{F1CAD451-C201-472D-B377-26A08285DAC7}.Debug|x86.Build.0 = Debug|Win32
+		{F1CAD451-C201-472D-B377-26A08285DAC7}.Release|x64.ActiveCfg = Release|x64
+		{F1CAD451-C201-472D-B377-26A08285DAC7}.Release|x64.Build.0 = Release|x64
+		{F1CAD451-C201-472D-B377-26A08285DAC7}.Release|x86.ActiveCfg = Release|Win32
+		{F1CAD451-C201-472D-B377-26A08285DAC7}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
