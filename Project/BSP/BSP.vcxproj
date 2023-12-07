@@ -73,9 +73,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)External\Library\BSP\</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
+    <ExternalIncludePath>$(SolutionDir)External\include\;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)External\Library\BSP\</OutDir>
+    <ExternalIncludePath>$(SolutionDir)External\include\;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)\lib\BSP\$(Platform)\$(Configuration)\</OutDir>
@@ -180,8 +182,6 @@ call BSPCopy.bat</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BSP.h" />
-    <ClInclude Include="define.h" />
-    <ClInclude Include="global.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

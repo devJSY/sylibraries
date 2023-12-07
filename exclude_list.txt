@@ -1,2 +1,1 @@
-define.h
-global.h
+func.h

@@ -1,6 +1,6 @@
 #pragma once
-#include "define.h"
-#include "global.h"
+#include "C++\\define.h"
+#include "C++\\global.h"
 
 namespace sy
 {

@@ -79,9 +79,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)External\Library\AStar\</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
+    <ExternalIncludePath>$(SolutionDir)External\include\;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)External\Library\AStar\</OutDir>
+    <ExternalIncludePath>$(SolutionDir)External\include\;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -171,8 +173,6 @@ call AStarCopy.bat</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AStar.h" />
-    <ClInclude Include="define.h" />
-    <ClInclude Include="global.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
